@@ -8,26 +8,36 @@ GraphQL plugin for WordPress
 
 ## Type System
 ```php
-wpql_register_type( 'Post', [
-    'id' => 'Int!',
-    'slug' => 'String!',
-    'title' => 'String',
-    'content' => 'String'
-] );
+add_action( 'wpql_init', 'prefix_register_wpql_types' );
+
+function prefix_register_wpql_types() {
+
+    wpql_register_type( 'Post', [
+        'id' => 'Int!',
+        'slug' => 'String!',
+        'title' => 'String',
+        'content' => 'String'
+    ] );
+}
 ```
 ## Query System
 ```php
-wpql_register_query( 'post', [
-    'type' => 'Post',
-    'args' => [
-        'id' => 'Int!',
-    ],
-    'resolve' => 'prefix_post_resolve'
-] );
+add_action( 'wpql_init', 'prefix_register_wpql_queries' );
+
+function prefix_register_wpql_queries() {
+    
+    wpql_register_query( 'post', [
+        'type' => 'Post',
+        'args' => [
+            'id' => 'Int!',
+        ],
+        'resolve' => 'prefix_post_resolve'
+    ] );
+}
 
 function prefix_post_resolve ( $root, $args ) {
     $post = get_post( $args['id'] );
-    
+
     return [
         'id' => $post->ID,
         'slug' => $post->post_name,
