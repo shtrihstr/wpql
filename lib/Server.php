@@ -11,8 +11,10 @@ class Server {
     public function dispatch( WP_REST_Request $request ) {
         $request_params = $this->_parse_request( $request );
 
+        $schema_config = apply_filters( 'wpql_schema', Schema::get_schema() );
+
         try {
-            $schema = SchemaBuilder::build( Schema::get_schema() );
+            $schema = SchemaBuilder::build( $schema_config );
         }
         catch ( Exception $e ) {
             return [
@@ -43,11 +45,11 @@ class Server {
                 $query = $params['query'];
             }
 
-            if ( isset( $params['variables'] ) ) {
+            if ( ! empty( $params['variables'] ) ) {
                 $variables = json_decode( $params['variables'] );
             }
 
-            if ( isset( $params['operationName'] ) ) {
+            if ( ! empty( $params['operationName'] ) ) {
                 $operation_name = $params['operationName'];
             }
         }
@@ -66,11 +68,11 @@ class Server {
                 $query = $params['query'];
             }
 
-            if ( isset( $params['variables'] ) ) {
+            if ( ! empty( $params['variables'] ) ) {
                 $variables = $params['variables'];
             }
 
-            if ( isset( $params['operationName'] ) ) {
+            if ( ! empty( $params['operationName'] ) ) {
                 $operation_name = $params['operationName'];
             }
         }

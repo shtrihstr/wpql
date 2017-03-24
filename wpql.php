@@ -19,6 +19,11 @@ add_action( 'rest_api_init', function() {
 
             require_once __DIR__ . '/functions.php';
 
+            if ( apply_filters( 'wpql_rest_proxy_enabled', true ) ) {
+                $wp_rest_proxy = new WPQL\Proxy\WPRest();
+                $wp_rest_proxy->register();
+            }
+
             do_action( 'wpql_init' );
 
             $wpql_server = new \WPQL\Server();
