@@ -65,3 +65,5 @@ Response
     }
 }
 ```
+## Built-in GraphQL wrapper over WP REST API
+<img src="https://cloud.githubusercontent.com/assets/11991783/24310982/5ad08ff6-10d2-11e7-991a-adad268710b3.png">
